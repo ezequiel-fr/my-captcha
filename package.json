@@ -1,0 +1,29 @@
+{
+  "name": "my-captcha",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "dev": "nodemon dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezequiel-fr/my-captcha.git"
+  },
+  "keywords": [
+    "captcha"
+  ],
+  "author": "ezequiel-fr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ezequiel-fr/my-captcha/issues"
+  },
+  "homepage": "https://github.com/ezequiel-fr/my-captcha#readme",
+  "dependencies": {
+    "@types/node": "^20.2.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
