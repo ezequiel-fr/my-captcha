@@ -1,6 +1,6 @@
 import SVGImage from './image';
 declare class MyCaptcha {
-    protected image: SVGImage;
+    protected svgImage: SVGImage;
     constructor();
     toString(): string;
 }

@@ -1,14 +1,18 @@
 import SVGImage from './image';
 
 class MyCaptcha {
-    protected image: SVGImage;
+    protected svgImage: SVGImage;
 
     constructor() {
-        this.image = new SVGImage();
+        this.svgImage = new SVGImage();
+        this.svgImage.createComponent({
+            name: 'circle',
+            props: { cx: 40, cy: 40, r: 30, fill: 'blue' }
+        });
     }
 
     toString(): string {
-        return this.image.toString();
+        return this.svgImage.toString();
     }
 }
 
