@@ -9,7 +9,10 @@ type ArgsPropsObj = Record<string, PropLike>;
 type ArgsLike = Args[] | ArgsPropsObj;
 
 // SVG Element
-type SVGCustomElement = { name: string; props: SVGProps };
+type SVGCustomElement = {
+    name: string;
+    props: SVGProps;
+};
 
 // SVG Element properties name
 type SVGPropsName =
@@ -21,13 +24,17 @@ type SVGPropsName =
     | "height"
     | "innerContent"
     | "r"
+    | "rx"
     | "repeatCount"
     | "values"
+    | "viewBox"
     | "width"
     | "xmlns"
     | (string & {});
 
-type SVGProps = { [P in SVGPropsName ]?: any };
+type SVGProps = {
+    [P in SVGPropsName ]?: PropLike | SVGProps[] | SVGCustomElement[]
+};
 
 class SVGImage {
     public image: SVGProps;
@@ -35,29 +42,17 @@ class SVGImage {
     constructor() {
         this.image = {
             xmlns: "http://www.w3.org/2000/svg",
-            innerContent: [{
-                name: 'rect',
-                props: {
-                    width: 200, height: 150, fill: "red",
-                    innerContent: [{
-                        name: 'animate', props: {
-                            attributeName: "rx",
-                            values: "0;50;0",
-                            dur: "10s",
-                            repeatCount: "indefinite",
-                        }
-                    }],
-                }
-            }],
+            viewBox: "10 10 250 250",
+            innerContent: [],
         };
     }
 
-    public createComponent(props: SVGProps, target?: SVGCustomElement) {
+    public createComponent(props: SVGCustomElement, target?: SVGCustomElement) {
         if (target) {
-            if (Array.isArray(target.props.innerContent))
+            if (Array.isArray(target.props.innerContent)) // @ts-ignore
                 target.props.innerContent.push(props);
             else target.props.innerContent = [props];
-        } else this.image.innerContent.push(props);
+        } else (this.image.innerContent as SVGCustomElement[]).push(props);
     }
 
     public toString(): string {
@@ -106,7 +101,8 @@ class SVGImage {
             const tag = tagFormat(name);
             let content = "";
 
-            if (props.innerContent)
+            if (props.innerContent && Array.isArray(props.innerContent))
+                // @ts-ignore
                 content = props.innerContent.map(stringify).join('\r\n');
 
             return insertArgs({

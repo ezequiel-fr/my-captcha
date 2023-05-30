@@ -8,5 +8,5 @@ createServer((_req, res) => {
     res.setHeader('Content-Type', 'image/svg+xml');
     const captcha = new MyCaptcha();
 
-    res.end(captcha.toSVG());
+    res.end(captcha.toBuffer());
 }).listen(4200, () => console.log("Server running at 4200"));

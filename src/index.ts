@@ -1,1 +1,1 @@
-require('./tests/svg');
+require('./tests/png');
